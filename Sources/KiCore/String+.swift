@@ -21,7 +21,22 @@ public extension String {
         return String(self[index...])
     }
     
-    // TODO: trimRight
+    func trimRight() -> String {
+        if isEmpty { return "" }
+        
+        let charSet = chars
+        var stopIndex = count-1
+        
+        for i in (0...count-1).reversed() {
+            if charSet[i].isWhitespace {
+                stopIndex-=1
+            } else {
+                break
+            }
+        }
+        
+        return String(charSet[...stopIndex])
+    }
     
     /**
      * Returns all the characters before the first occurance of substring. If substring does not
@@ -159,7 +174,7 @@ public extension String {
         return emojis.map { String($0) }.reduce("", +)
     }
 
-    var emojis: [Character] {
+    var emojis: Chars {
         return filter { $0.isEmoji }
     }
 
