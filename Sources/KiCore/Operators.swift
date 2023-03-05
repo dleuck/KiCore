@@ -5,13 +5,12 @@
 //  Created by Daniel Leuck on 2023/02/22.
 //
 
-import Foundation
 
 // Log operators
 prefix operator »
 
 @discardableResult
-prefix func » (obj: Any?) -> String {
+public prefix func » (obj: Any?) -> String {
     var text: String
     
     if obj == nil {
