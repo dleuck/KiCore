@@ -41,5 +41,6 @@ public extension Character {
     var isEmoji: Bool {
         return isSimpleEmoji || isCombinedIntoEmoji
     }
+    
 }
 

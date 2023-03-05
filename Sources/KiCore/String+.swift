@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension StringProtocol {
+public extension String {
     
     func trim() -> String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -21,31 +21,49 @@ public extension StringProtocol {
         return String(self[index...])
     }
     
-    func before(_ substring:CustomStringConvertible) -> String? {
-        if substring is Character {
-            let firstIdx = firstIndex(of: substring as! Character)
-            return firstIdx==nil ? nil : String(self[..<firstIdx!])
+    // TODO: trimRight
+    
+    /**
+     * Returns all the characters before the first occurance of substring. If substring does not
+     * occur, return nil.
+     */
+    func before(_ substring:String) -> String? {
+        if let range = range(of: substring) { return String(self[..<range.lowerBound]) }
+        return nil
+    }
+    
+    /**
+     * Returns all the characters before the first occurance of char. If char does not occur, return
+     * nil.
+     */
+    func before(_ char: Char) -> String? {
+        if let index = firstIndex(of: char) {
+            let before = prefix(upTo: index)
+            return String(before)
         }
-        
-        let sub = substring is String ? substring as! String : substring.description
-        
-        if let range = description.range(of: sub) {
+        return nil
+    }
+    
+    /**
+     * Returns all the characters before the last occurance of substring. If substring does not
+     * occur, return nil.
+     */
+    func beforeLast(_ substring:String) -> String? {
+        if let range = description.range(of: substring, options:String.CompareOptions.backwards) {
             return String(self[..<range.lowerBound])
         }
         
         return nil
     }
     
-    func beforeLast(_ substring:CustomStringConvertible) -> String? {
-        if substring is Character {
-            let lastIdx = lastIndex(of: substring as! Character)
-            return lastIdx==nil ? nil : String(self[..<lastIdx!])
-        }
-        
-        let sub = substring is String ? substring as! String : substring.description
-        
-        if let range = description.range(of: sub, options:NSString.CompareOptions.backwards) {
-            return String(self[..<range.lowerBound])
+    /**
+     * Returns all the characters before the last occurance of char. If char does not occur,
+     * return nil.
+     */
+    func beforeLast(_ char:Char) -> String? {
+        if let index = lastIndex(of: char) {
+            let before = prefix(upTo: index)
+            return String(before)
         }
         
         return nil
@@ -53,40 +71,43 @@ public extension StringProtocol {
     
     ////
     
-    func after(_ substring:CustomStringConvertible) -> String? {
-        if substring is Character {
-            let firstIdx = firstIndex(of: substring as! Character)
-            
-            return firstIdx==nil ? nil : String(self[index(after: firstIdx!)...])
-        }
+    func after(_ substring:String) -> String? {
         
-        let sub = substring is String ? substring as! String : substring.description
-        
-        if let range = description.range(of: sub) {
+        if let range = range(of: substring) {
             return String(self[range.upperBound...])
         }
         
         return nil
     }
     
-    func afterLast(_ substring:CustomStringConvertible) -> String? {
-        if substring is Character {
-            let lastIdx = lastIndex(of: substring as! Character)
-            
-            return lastIdx==nil ? nil : String(self[index(after: lastIdx!)...])
+    func after(_ char:Char) -> String? {
+        if let index = firstIndex(of: char) {
+            return String(self[index...].dropFirst())
         }
         
-        let sub = substring is String ? substring as! String : substring.description
-        
-        if let range = description.range(of: sub, options:NSString.CompareOptions.backwards) {
+        return nil
+    }
+
+    func afterLast(_ substring:String) -> String? {
+        if let range = description.range(of: substring, options:NSString.CompareOptions.backwards) {
             return String(self[range.upperBound...])
         }
         
         return nil
     }
     
-    var chars: [Character] {
-       return self.map { $0 }
+    func afterLast(_ char:Char) -> String? {
+        if let index = lastIndex(of: char) {
+            return String(self[index...].dropFirst())
+        }
+        
+        return nil
+    }
+    
+    ////
+    
+    var chars: Chars {
+       return Array(self)
     }
     
     func replaceAll(_ oldString:String, _ newString:String) -> String {
@@ -97,7 +118,7 @@ public extension StringProtocol {
         return replaceAll(string, "")
     }
     
-    func count(_ char: Character) -> Int {
+    func count(_ char: Char) -> Int {
         return filter { $0 == char }.count
     }
     
@@ -145,13 +166,14 @@ public extension StringProtocol {
     var emojiScalars: [UnicodeScalar] {
         return filter{ $0.isEmoji }.flatMap { $0.unicodeScalars }
     }
-    
-    // TODO: trimRight
-    
-    // TODO:  beforeFirst (include / exclude first), afterFirst (include / exclude first)
-    //        beforeLast (include / exclude last), afterLast (include / exclude last)
-    //
-    // Support regex and string (maybe characterset or [String])
+}
+
+extension Chars {
+    var string: String { return String(self) }
+}
+
+extension Chars.SubSequence {
+    var string: String { return String(self) }
 }
 
 /**
