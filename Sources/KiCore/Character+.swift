@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Character+.swift
 //  
 //
 //  Created by Daniel Leuck on 2023/02/22.
@@ -13,13 +13,11 @@ public extension Character {
     
     static var fractions = "½⅓⅔¼¾⅛⅜⅝⅞", exponents = "⁰¹²³⁴⁵⁶⁷⁸⁹"
     
-    var isFraction : Bool {
-        return Character.fractions.contains(self)
-    }
+    var isAlphaNumeric: Bool { isLetter || isNumber }
     
-    var isExponent : Bool {
-        return Character.exponents.contains(self)
-    }
+    var isFraction : Bool { Character.fractions.contains(self) }
+    
+    var isExponent : Bool { return Character.exponents.contains(self) }
     
     /// A simple emoji is a single scalar presented to the user as an Emoji
     var isSimpleEmoji: Bool {
@@ -38,9 +36,7 @@ public extension Character {
                 $0.properties.isVariationSelector }
     }
 
-    var isEmoji: Bool {
-        return isSimpleEmoji || isCombinedIntoEmoji
-    }
+    var isEmoji: Bool { isSimpleEmoji || isCombinedIntoEmoji }
     
 }
 

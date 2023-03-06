@@ -9,6 +9,16 @@ import Foundation
 
 public extension String {
     
+    func isAlphaNumeric() -> Bool {
+        return rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) == nil && !isEmpty
+        /*
+        var modValue = self
+        if modValue.hasPrefix("-") { modValue.removeFirst() }
+        return modValue.rangeOfCharacter(from: CharacterSet.alphanumerics.inverted) ==
+            nil && !isEmpty
+        */
+    }
+    
     func trim() -> String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
