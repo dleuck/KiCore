@@ -13,7 +13,7 @@ public extension Character {
     
     static var fractions = "½⅓⅔¼¾⅛⅜⅝⅞", exponents = "⁰¹²³⁴⁵⁶⁷⁸⁹"
     
-    var isAlphaNumeric: Bool { isLetter || isNumber }
+    var isAlphanumeric: Bool { isLetter || isNumber }
     
     var isFraction : Bool { Character.fractions.contains(self) }
     
