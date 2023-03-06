@@ -6,4 +6,3 @@
 //
 
 public typealias Char = Character
-public typealias Chars = Array<Character>

@@ -131,7 +131,7 @@ public extension String {
     
     ////
     
-    var chars: Chars {
+    var chars: [Character] {
        return Array(self)
     }
     
@@ -184,7 +184,7 @@ public extension String {
         return emojis.map { String($0) }.reduce("", +)
     }
 
-    var emojis: Chars {
+    var emojis: [Character] {
         return filter { $0.isEmoji }
     }
 
@@ -193,11 +193,11 @@ public extension String {
     }
 }
 
-extension Chars {
+extension [Character] {
     var string: String { return String(self) }
 }
 
-extension Chars.SubSequence {
+extension Array<Character>.SubSequence {
     var string: String { return String(self) }
 }
 
