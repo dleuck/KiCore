@@ -131,7 +131,7 @@ public extension String {
     
     ////
     
-    var chars: [Character] {
+    var charArray: [Character] {
        return Array(self)
     }
     
@@ -190,6 +190,10 @@ public extension String {
 
     var emojiScalars: [UnicodeScalar] {
         return filter{ $0.isEmoji }.flatMap { $0.unicodeScalars }
+    }
+    
+    var chars: Chars {
+        return Chars(self)
     }
 }
 
