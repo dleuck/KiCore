@@ -77,7 +77,13 @@ final class CharsTests: XCTestCase {
     }
     
     func testEmoji() throws {
-        print("👩‍👩‍👧‍👦".count)
-        
+        let string = "👩‍👩‍👧‍👦👩‍🚀🤦🏾‍♂️👨‍👩‍👧".chars
+        XCTAssertEqual(string.count, 4)
+        print("Count: \(string.count)")
+        let string2 = "👧👧🏻👧🏼👧🏽👧🏾👧🏿".chars
+        XCTAssertEqual(string2.last, "👧🏿")
+        print("Count: \(string2.last)")
+        XCTAssertEqual(string2[...2], "👧👧🏻👧🏼")
+        print("Count: \(string2[...2])")
     }
 }

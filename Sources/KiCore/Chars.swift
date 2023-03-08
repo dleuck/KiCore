@@ -9,9 +9,10 @@ import Foundation
 
 /**
  * The Chars struct is a useful replacement for Strings for text manipulation and parsing heavy
- * applications. While this is not as efficient or compact as a String when stored, it is ideal for
- * parsing because Int can be used instead of String.Index for addressing char indexes and ranges.
- * Counts are always reliable, and the Char struct is unicode and emoji safe.
+ * applications. While this is usually not as efficient or compact as a String when stored, the
+ * Chars struct is ideal for parsing because Int can be used instead of String.Index for addressing
+ * char indexes and ranges. Counts are always reliable, and the Char struct is unicode friendly and
+ * and emoji safe.
  */
 public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolation,
                      CustomStringConvertible, TextOutputStream, Comparable, Equatable,
@@ -113,10 +114,12 @@ public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolatio
         chars.replaceSubrange(range, with: with)
     }
     
+    // TODO replaceFirst, replaceLast, replaceAll for Chars and Regex
+    
     public mutating func write(_ string: String) { add(string) }
     
     // operators
-    
+
     public static func == (lhs: Chars, rhs: Chars) -> Bool { lhs.chars == rhs.chars }
     
     public static func < (lhs: Chars, rhs: Chars) -> Bool { lhs.description < rhs.description }
