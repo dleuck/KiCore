@@ -9,9 +9,10 @@ import Foundation
 
 // Note: This includes code in a response by Kevin R on StackOverflow:
 //   https://stackoverflow.com/questions/30757193/find-out-if-character-in-string-is-emoji
-public extension Character {
+public extension Char {
     
     static var fractions = "½⅓⅔¼¾⅛⅜⅝⅞", exponents = "⁰¹²³⁴⁵⁶⁷⁸⁹"
+    static var null: Char = "\u{0000}"
     
     var isAlphanumeric: Bool { isLetter || isNumber }
     
@@ -38,5 +39,21 @@ public extension Character {
 
     var isEmoji: Bool { isSimpleEmoji || isCombinedIntoEmoji }
     
+    /**
+     * Soft null conformance
+     */
+    /*
+    var isNull: Bool {
+        self == Char.null
+    }
+    */
 }
+
+extension Char : SoftNullable {
+    public var isNull: Bool {
+        self == Char.null
+    }
+}
+
+
 

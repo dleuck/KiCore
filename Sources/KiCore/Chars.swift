@@ -8,12 +8,14 @@
 import Foundation
 
 /**
- * TODO: Complete implementation
+ * The Chars struct is a useful replacement for Strings for text manipulation and parsing heavy
+ * applications. While this is not as efficient or compact as a String when stored, it is ideal for
+ * parsing because Int can be used instead of String.Index for addressing char indexes and ranges.
+ * Counts are always reliable, and the Char struct is unicode and emoji safe.
  */
 public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolation,
                      CustomStringConvertible, TextOutputStream, Comparable, Equatable,
                      ExpressibleByArrayLiteral, Sequence {
-    
 
     public typealias Element = Char
     public typealias ArrayLiteralElement = Char
@@ -60,27 +62,60 @@ public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolatio
 
     public subscript(range: PartialRangeThrough<Int>) -> Chars { Chars(chars[range]) }
     
-    public var first: Char? { chars.first }
+    public var isEmpty: Bool { chars.count == 0 }
     
-    public func dropFirst() -> Chars { Chars(chars.dropFirst()) }
+    /**
+     * Returns the first char or Char.null if the Chars is empty.
+     */
+    public var first: Char { return isEmpty ? Char.null : chars[0] }
     
-    public var last: Char? { chars.last }
-    
-    public func dropLast() -> Chars { Chars(chars.dropLast()) }
-    
+    /**
+     * Returns the last char or Char.null if the Chars is empty.
+     */
+    public var last: Char { return isEmpty ? Char.null : chars[chars.count-1] }
+
     public func hasPrefix(_ prefix: String) -> Bool { string.hasPrefix(prefix)}
+    
+    public func dropPrefix(_ prefix: String) -> Chars {
+        return hasPrefix(prefix) ? dropFirst(prefix.count) : self
+    }
 
     public func hasSuffix(_ suffix: String) -> Bool { string.hasSuffix(suffix) }
     
+    public func dropSuffix(_ suffix: String) -> Chars {
+        return hasSuffix(suffix) ? dropLast(suffix.count) : self
+    }
+    
     public func trim() -> Chars { Chars(string.trim()) }
     
-    public mutating func replaceRange(_ range: ClosedRange<Int>, with: any Collection<Char>) {
-        return chars.replaceSubrange(range, with: with)
+    public func dropLast() -> Chars { Chars(chars.dropLast()) }
+    
+    public func dropLast(_ count: Int) -> Chars { Chars(chars.dropLast(count)) }
+    
+    public func dropFirst() -> Chars { Chars(chars.dropFirst()) }
+    
+    public func dropFirst(_ count: Int) -> Chars { Chars(chars.dropFirst(count)) }
+    
+    /**
+     * TODO: Expand to include any char sequence or regex
+     */
+    public func split(_ separator: String) -> [Chars] {
+        let tokens = string.split(separator: separator)
+        let newArray = tokens.map { Chars($0) }
+        return [Chars](newArray)
     }
     
-    public mutating func write(_ string: String) {
-        add(string)
+    public func contains(_ text: Chars) -> Bool { string.contains(text.string) }
+    
+    public func contains(_ text: String) -> Bool { return string.contains(text) }
+    
+    public mutating func replaceRange(_ range: ClosedRange<Int>, with: any Collection<Char>) {
+        chars.replaceSubrange(range, with: with)
     }
+    
+    public mutating func write(_ string: String) { add(string) }
+    
+    // operators
     
     public static func == (lhs: Chars, rhs: Chars) -> Bool { lhs.chars == rhs.chars }
     
@@ -107,4 +142,6 @@ public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolatio
     public func makeIterator() -> String.Iterator {
         return string.makeIterator()
     }
+    
+    // TODO - Regex methods
 }

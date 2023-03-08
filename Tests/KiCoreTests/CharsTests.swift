@@ -28,6 +28,12 @@ final class CharsTests: XCTestCase {
         XCTAssertEqual(text[...4], "Hello")
     }
     
+    func testReplaceRange() throws {
+        var text = "aaa bbb".chars
+        text.replaceRange(0...2, with: "**")
+        XCTAssertEqual(text, "** bbb")
+    }
+    
     func testSequence() throws {
         let name = "Daniel".chars
         XCTAssertEqual("\(type(of: name))", "Chars")
@@ -45,5 +51,33 @@ final class CharsTests: XCTestCase {
         XCTAssertEqual(text1 + "berry", "fooberry")
         XCTAssertEqual("hi" + text1 + "berry", "hifooberry")
         XCTAssertEqual( "berry" + text1, "berryfoo")
+    }
+    
+    func testPrefixSufixDrops() throws {
+        XCTAssertEqual("http://foo.com".chars.dropPrefix("http://"), "foo.com")
+        XCTAssertEqual("blob".chars.dropPrefix("--"), "blob")
+        
+        XCTAssertEqual("file.txt".chars.dropSuffix(".txt"), "file")
+        XCTAssertEqual("blob".chars.dropSuffix("--"), "blob")
+    }
+    
+    func testFirstLast() throws {
+        let greeting = "Hello".chars
+        print(greeting.first)
+        XCTAssertEqual(greeting.first, "H")
+        print(greeting.last)
+        XCTAssertEqual(greeting.last, "o")
+        let empty = "".chars
+        XCTAssertEqual(empty.first, Char.null)
+        print(empty.first)
+        XCTAssertEqual(empty.last, Char.null)
+        print(empty.last)
+        XCTAssertEqual(empty.first.isNull, true)
+        XCTAssertEqual(greeting.first.isNull, false)
+    }
+    
+    func testEmoji() throws {
+        print("👩‍👩‍👧‍👦".count)
+        
     }
 }
