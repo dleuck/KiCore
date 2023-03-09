@@ -8,11 +8,11 @@
 import Foundation
 
 /**
- * The Chars struct is a useful replacement for Strings for text manipulation and parsing heavy
- * applications. While this is usually not as efficient or compact as a String when stored, the
- * Chars struct is ideal for parsing because Int can be used instead of String.Index for addressing
- * char indexes and ranges. Counts are always reliable, and the Char struct is unicode friendly and
- * and emoji safe.
+ The Chars struct is a useful replacement for Strings for text manipulation and parsing heavy
+ applications. While this is usually not as efficient or compact as a String when stored, the
+ Chars struct is ideal for parsing because Int can be used instead of String.Index for addressing
+ char indexes and ranges. Counts are always reliable, and the Char struct is unicode friendly and
+ and emoji safe.
  */
 public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolation,
                      CustomStringConvertible, TextOutputStream, Comparable, Equatable,
@@ -76,7 +76,7 @@ public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolatio
     public var last: Char { return isEmpty ? Char.null : chars[chars.count-1] }
 
     public func hasPrefix(_ prefix: String) -> Bool { string.hasPrefix(prefix)}
-    
+
     public func dropPrefix(_ prefix: String) -> Chars {
         return hasPrefix(prefix) ? dropFirst(prefix.count) : self
     }
@@ -97,9 +97,8 @@ public struct Chars: ExpressibleByStringLiteral, ExpressibleByStringInterpolatio
     
     public func dropFirst(_ count: Int) -> Chars { Chars(chars.dropFirst(count)) }
     
-    /**
-     * TODO: Expand to include any char sequence or regex
-     */
+    // TODO: Expand to include any char sequence or regex
+
     public func split(_ separator: String) -> [Chars] {
         let tokens = string.split(separator: separator)
         let newArray = tokens.map { Chars($0) }
