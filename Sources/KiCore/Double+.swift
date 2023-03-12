@@ -9,6 +9,8 @@ import Foundation
 
 extension Double: SoftNullable {
     
+    public static let percentRange = 0.0...100.0
+    
     /// Conforms to SoftNullable - we use isNaN as the equivalent of a soft null
     public var isNull: Bool {
         return self.isNaN
@@ -19,5 +21,15 @@ extension Double: SoftNullable {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
     }
+}
+
+/**
+ * Returns a numer between num1 and num2.
+ */
+public func between(_ num1: Double, _ num2: Double, percent: Double = 0.5) -> Double {
+    let percent = percent.clamp(Double.percentRange)
+    let distance = num1.distance(to: num2)
+    
+    return num1 + (distance * percent)
 }
  

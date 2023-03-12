@@ -8,7 +8,5 @@
 import Foundation
 
 public protocol SoftNullable {
-    var isNull: Bool {
-        get
-    }
+    var isNull: Bool { get }
 }

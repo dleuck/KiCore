@@ -13,7 +13,7 @@ public extension Char {
     
     static var fractions = "½⅓⅔¼¾⅛⅜⅝⅞", exponents = "⁰¹²³⁴⁵⁶⁷⁸⁹"
     static var null: Char = "\u{0000}"
-    
+
     var isAlphanumeric: Bool { isLetter || isNumber }
     
     var isFraction : Bool { Character.fractions.contains(self) }
@@ -50,6 +50,8 @@ public extension Char {
 }
 
 extension Char : SoftNullable {
+    
+    /// Conforms to SoftNullable - we use Char.null (\\u{0000}) as the equivalent of a soft null
     public var isNull: Bool {
         self == Char.null
     }

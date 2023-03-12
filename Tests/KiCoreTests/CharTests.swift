@@ -8,7 +8,7 @@
 import XCTest
 @testable import KiCore
 
-final class CharsTests: XCTestCase {
+final class CharTests: XCTestCase {
     
     func testInstantiate() throws {
         let foo: Chars = "Hello"
