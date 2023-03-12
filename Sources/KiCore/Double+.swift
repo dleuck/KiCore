@@ -24,7 +24,7 @@ extension Double: SoftNullable {
 }
 
 /**
- * Returns a numer between num1 and num2.
+ * Returns a Double between num1 and num2.
  */
 public func between(_ num1: Double, _ num2: Double, percent: Double = 0.5) -> Double {
     let percent = percent.clamp(Double.percentRange)
@@ -32,4 +32,5 @@ public func between(_ num1: Double, _ num2: Double, percent: Double = 0.5) -> Do
     
     return num1 + (distance * percent)
 }
+
  
