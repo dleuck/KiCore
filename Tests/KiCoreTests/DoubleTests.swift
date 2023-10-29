@@ -35,4 +35,11 @@ final class DoubleTests: XCTestCase {
         XCTAssertEqual(between(10, 20, percent:0.75), 17.5)
         XCTAssertEqual(between(20, 10, percent:0.75), 12.5)
     }
+    
+    func testRounding() throws {
+        XCTAssertEqual(preciseRound(1.27), 1) // Result is 1
+        XCTAssertEqual(preciseRound(1.27, precision: .tenths), 1.3)
+        XCTAssertEqual(preciseRound(1.272, precision: .hundredths), 1.27)
+        XCTAssertEqual(preciseRound(1.2728, precision: .thousandths), 1.273)
+    }
 }
